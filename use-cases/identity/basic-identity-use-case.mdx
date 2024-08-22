@@ -4,7 +4,7 @@ icon: fingerprint
 ---
 
 In this page we explain how you can integrate your existing application with 
-the Loccus AI voice identity service, in order to securely authenticate users with their voice.
+the Hiya voice identity service, in order to securely authenticate users with their voice.
 
 <Tip>This is just a sample, meant to cover the most basic use case. 
 You can tailor the use of our API to your exact needs! </Tip>
@@ -22,20 +22,20 @@ sequenceDiagram
     Customer->>+Your System: Start Voice Enrollment
     Your System-->>Customer: Ask to say a predefined message(s)
     Customer->>+Your System: Audio(s)
-    Your System->>+Loccus AI: Audio(s)
+    Your System->>+Hiya: Audio(s)
     rect rgba(255, 0, 0, .1)
-    note over Customer, Loccus AI: Verify the audios
-    Your System->>Loccus AI: Perform Message Verification
-    Your System->>Loccus AI: Perform Authenticity Verification
-    Loccus AI-->>-Your System: Verification Results
+    note over Customer, Hiya: Verify the audios
+    Your System->>Hiya: Perform Message Verification
+    Your System->>Hiya: Perform Authenticity Verification
+    Hiya-->>-Your System: Verification Results
     Note over Customer,Your System: If the message verification <br> is not successful, ask <br>client for new audios.
     Your System-->>Customer: Start the process again
     Note over Your System: If the authenticity verification <br> is not successful, stop the process<br> and contact the client.
     end
     rect rgba(0, 255, 0, .1)
-    note over Customer, Loccus AI: Compute the voiceprint
-    Your System->>+Loccus AI: Compute Voiceprint
-    Loccus AI-->>-Your System: Voiceprint OK
+    note over Customer, Hiya: Compute the voiceprint
+    Your System->>+Hiya: Compute Voiceprint
+    Hiya-->>-Your System: Voiceprint OK
     Your System-->>Customer: Voice Enrollment finished
     end
 ```
@@ -74,13 +74,13 @@ sequenceDiagram
     Your System-->>Customer: Ask to say a random message
     Customer->>+Your System: Audio
     rect rgba(0, 255, 0, .1)
-    create participant Loccus AI
-    note over Customer, Loccus AI: Verify the audio
-    Your System->>Loccus AI: Audio
-    Your System->>Loccus AI: Perform Message Verification
-    Your System->>Loccus AI: Perform Identity Verification
-    destroy Loccus AI
-    Loccus AI-->>Your System: Verification Results
+    create participant Hiya
+    note over Customer, Hiya: Verify the audio
+    Your System->>Hiya: Audio
+    Your System->>Hiya: Perform Message Verification
+    Your System->>Hiya: Perform Identity Verification
+    destroy Hiya
+    Hiya-->>Your System: Verification Results
     Note over Customer,Your System: If the verification isn't successful,<br> don't authorize the user.
     Your System-->>Customer: Log Out
     Note over Customer,Your System: If the verification is successful,<br> authorize the user.
@@ -110,16 +110,16 @@ In order to use this functionality, you need to perform this three steps:
 </Steps>
 
 # Administration
-The Loccus Console provides a graphical interface that allows your team to 
-effectively manage the Loccus Platform Service. API endpoints are also available for 
+The Hiya Console provides a graphical interface that allows your team to 
+effectively manage the Hiya Audio Intelligence APIs Service. API endpoints are also available for 
 administration and platform monitoring 
 <Tip>Check [usage statistics][16] and [usage records][17] for more details.</Tip>
 ```mermaid
 flowchart LR
-    A[🕵️ Security Team] <-->|Cyber Thread Intelligence| C(💻 Loccus Console)
+    A[🕵️ Security Team] <-->|Cyber Thread Intelligence| C(💻 Hiya Console)
     B[💼 Managers] <-->|Reporting| C
     E[👨‍💻 System Administrators] -->|Manage| C 
-    C <--> D(⚙️ Loccus API)
+    C <--> D(⚙️ Hiya API)
 ```
 <Card title="Security Team" icon="shield-halved">
 Mitigate AI fraud risk, and gather more Thread Intelligence based on evolving TTPs of top actors.
@@ -130,7 +130,7 @@ cyber attacks.
 Monitor fraud KPIs and leverage voice insights for internal and external reporting.
 </Card>
 <Card title="System Administrators" icon="computer">
-Easily configure and manage the Loccus Platform usage, including IAM and retention policies.
+Easily configure and manage the Hiya Audio Intelligence APIs usage, including IAM and retention policies.
 </Card>
 
 [1]: /api-reference/voice-samples/requirements

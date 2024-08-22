@@ -4,7 +4,7 @@ icon: sitemap
 ---
 
 In this page we explain how you can integrate your existing application with 
-the Loccus AI voice verification service, in order to detect synthetic voices or replays.
+the Hiya voice verification service, in order to detect synthetic voices or replays.
 
 This kind of findings can empower your system or application to avoid 
 fraud to your employees and clients.
@@ -15,7 +15,7 @@ You can tailor the use of our API to your exact needs! </Note>
 <Tip>Check the [Authenticity Best Practices page][5] for recommendations!</Tip>
 
 # Architecture
-You can use Loccus API to verify voice as soon as is processed by your system. 
+You can use Hiya API to verify voice as soon as is processed by your system. 
 We provide insightful results near real time, so you can apply necessary actions promptly, 
 like warning users, system administrators or ending the call.
 ## Diagram
@@ -23,8 +23,8 @@ like warning users, system administrators or ending the call.
 sequenceDiagram
     actor Clients
     Clients->>+Your System: System Usage (ie. Call)
-    Your System->>+Loccus AI: Voice Snippet
-    Loccus AI-->>-Your System: Verification Result
+    Your System->>+Hiya: Voice Snippet
+    Hiya-->>-Your System: Verification Result
     Note over Your System: If the voice is not real, <br>apply business logic
     Your System-->>-Clients: Warning!
 ```

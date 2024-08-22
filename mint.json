@@ -1,18 +1,18 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Loccus",
+  "name": "Hiya",
   "logo": {
     "dark": "/assets/logo/dark.svg",
     "light": "/assets/logo/light.svg"
   },
-  "favicon": "/assets/favicon.svg",
+  "favicon": "/assets/favicon.png",
   "colors": {
-    "primary": "#23b693",
-    "light": "#2ce4b8",
-    "dark": "#1a896e",
+    "primary": "#6a44b9",
+    "light": "#8460d2",
+    "dark": "#52348d",
     "anchors": {
-      "from": "#1a896e",
-      "to": "#2ce4b8"
+      "from": "#52348d",
+      "to": "#8460d2"
     }
   },
   "api": {
@@ -382,7 +382,7 @@
   ],
   "footerSocials": {
     "website": "https://www.loccus.ai",
-    "linkedin": "https://www.linkedin.com/company/loccus-ai",
+    "linkedin": "https://www.linkedin.com/company/hiyainc",
     "github": "https://github.com/loccus-ai"
   }
 }
