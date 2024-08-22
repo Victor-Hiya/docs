@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 92 92" width="92" height="92" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>.cls-1{fill:#0b2e25;}.cls-2{fill:#2ce4b8;}</style>
+  </defs>
+  <rect x="8" width="76" height="92" rx="18" ry="18" style="stroke: rgb(0, 0, 0); stroke-width: 0px; fill: rgb(255, 255, 255);" transform="matrix(1.0000000000000002, 0, 0, 1, 0, 0)"/>
+  <g id="Layer_2" data-name="Layer 2" transform="matrix(1.0000000000000002, 0, 0, 1, 20.86999863786049, 14.234999456129284)">
+    <g id="Layer_4" data-name="Layer 4">
+      <path class="cls-1" d="M27.7,6.69h-.28v8.6h.28c8,0,13.43,4.29,13.43,14.39V40.53c0,11.17-5.48,14.4-13.43,14.4S14.17,51.7,14.17,40.53V29.68c0-.79.05-1.54.11-2.26H5.13c0,.74-.09,1.49-.09,2.26V40.53c0,14.61,8.91,23,22.66,23s22.56-8.38,22.56-23V29.68C50.26,15.07,41.45,6.69,27.7,6.69Z"/>
+      <rect class="cls-2" width="18.28" height="18.28"/>
+    </g>
+  </g>
+</svg>

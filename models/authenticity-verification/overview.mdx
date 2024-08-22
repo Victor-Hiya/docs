@@ -1,0 +1,54 @@
+---
+title: Authenticity verification models
+sidebarTitle: Overview
+icon: robot-astromech
+---
+
+Authenticity verification models are analyzers of the
+authenticity and liveliness of the voice. They can be
+used to perform [authenticity verifications][1].
+
+<Tip>
+  **Model details:** to review the requirements of a model
+  navigate to the pages of its versions.
+</Tip>
+
+<Note>
+  **Version selection:** the platform automatically
+  selects the latest version of the verification models.
+</Note>
+
+## Default
+
+<Tabs>
+  <Tab title="Description">
+    The **default** authenticity verification model is 
+    the recommended model for everything but the telephone
+    channel. The digital channel and the English and Spanish
+    languages make up a significant part of its training dataset.
+  </Tab>
+  <Tab title="Currently available version">
+    [v7](/models/authenticity-verification/default/v7)
+    is the only version currently available and the previous
+    ones have been deprecated, which does not impact in any way
+    the verifications already performed with them.
+  </Tab>
+</Tabs>
+
+## Telephone
+
+<Tabs>
+  <Tab title="Description">
+    The **telephone** authenticity verification model is 
+    the recommended model for the telephone channel and
+    is the only model that supports audios of 8 KHz.
+    The English and Spanish languages make up a
+    significant part of its training dataset.
+  </Tab>
+  <Tab title="Currently available version">
+    [v4](/models/authenticity-verification/telephone/v4)
+    is the only version currently available.
+  </Tab>
+</Tabs>
+
+[1]: /api-reference/authenticity-verifications

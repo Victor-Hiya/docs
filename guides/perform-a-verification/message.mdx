@@ -1,0 +1,230 @@
+---
+title: Perform a message verification
+sidebarTitle: Message
+icon: message-lines
+---
+
+In this guide you will learn how to perform a [message
+verification][5] on an [audio][3].
+
+<Tip>
+  If you are unfamiliar with these concepts, follow their
+  links or read the [API reference introduction][1].
+</Tip>
+
+**✦ Goal:** perform a message `verification` and obtain its
+`score`.
+
+## Prerequisites
+
+<Steps>
+  <Snippet file="prerequisites/set-up-your-http-client.mdx" />
+  <Snippet file="prerequisites/authenticate-using-your-credentials-or-api-keys.mdx" />
+  <Snippet file="prerequisites/gain-access-to-a-space.mdx" />
+  <Snippet file="prerequisites/upload-an-audio.mdx" />
+  <Snippet file="prerequisites/obtain-the-expected-message-and-language.mdx" />
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Procedure
+
+<Steps>
+  <Step title="Choose the message verification model">
+    Check the available models and choose the one
+    you will use to perform the verification.
+    See the [model index][10].
+
+    <Warning>
+      Each model has its own requirements. If you do not choose
+      an appropriate one for your audio, you will receive an
+      error when you attempt to perform the verification.
+    </Warning>
+
+    ---> `model`
+  </Step>
+  <Step title="Perform the message verification">
+    Perform the message verification on the uploaded audio
+    with the chosen model, providing the expected message and
+    language. See the [API reference][6].
+
+    \<--- `owner` `space` `model` `audio` `message` `language`
+
+    <Note>
+      Optionally, you may choose the [alias][2]
+      for the `verification`.
+    </Note>
+
+    <Note>
+      In verifications, the latest model version
+      is automatically selected.
+    </Note>
+
+    ---> ✦ `verification` `version` ✦ `score`
+
+    <Note>
+      In verifications, confidence in a positive result
+      is represented by their scores. [Learn more][4].
+    </Note>
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `POST`
+        - Path — `/spaces/{owner}/{space}/verifications/message`
+        - Body — `application/json`
+
+        ```json
+        {
+          "model": "{model}",
+          "audio": "{audio}",
+          "message": "{message}",
+          "language": "{language}"
+        }
+        ```
+      </Tab>
+      <Tab title="Response">
+        - Code — `201`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{verification}",
+          "alias": "...",
+          "model": {
+            "handle": "{model}",
+            "version": "{version}"
+          },
+          "audio": {
+            "handle": "{audio}",
+            "alias": "..."
+          },
+          "message": "{message}",
+          "language": "{language}",
+          "score": {score},
+          "performedAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Validation
+
+<Steps>
+  <Step title="Validate the message verification details">
+    To validate that the message verification has been
+    correctly performed, retrieve and analyze its details.
+    See the [API reference][7].
+
+    \<--- `owner` `space` `verification`
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/spaces/{owner}/{space}/verifications/message/{verification}`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{verification}",
+          "alias": "...",
+          "model": {
+            "handle": "{model}",
+            "version": "{version}"
+          },
+          "audio": {
+            "handle": "{audio}",
+            "alias": "..."
+          },
+          "message": "{message}",
+          "language": "{language}",
+          "score": ...,
+          "performedAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Validate the verification usage records">
+    To validate that the message verification has been
+    correctly performed, retrieve and analyze the verification
+    usage records. See the [API reference][9].
+
+    \<--- `owner`
+
+    <Warning>
+      This step assumes that the `owner` is an organization.
+      If you are the owner, you must use a slightly different
+      endpoint. See the [API reference][8].
+    </Warning>
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/orgs/{owner}/records/verification`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        [
+          ...,
+          {
+            "id": "...",
+            "handle": "...",
+            "actor": {
+              "handle": "...",
+              "alias": "..."
+            },
+            "type": "message",
+            "model": {
+              "handle": "{model}",
+              "version": "{version}"
+            },
+            "verification": {
+              "handle": "{verification}",
+              "alias": "...",
+              "type": "message"
+            },
+            "space": {
+              "handle": "{space}",
+              "alias": "...",
+              "owner": {
+                "type": "...",
+                "handle": "{owner}",
+                "alias": "..."
+              }
+            },
+            "owner": {
+              "type": "...",
+              "handle": "{owner}",
+              "alias": "..."
+            },
+            "performedAt": "..."
+          },
+          ...
+        ]
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="party-horn"></Step>
+</Steps>
+
+[1]: /api-reference/introduction
+[2]: /api-reference/ids-handles-and-aliases
+[3]: /api-reference/audios
+[4]: /api-reference/verifications/scores
+[5]: /api-reference/message-verifications
+[6]: /api-reference/message-verifications/create
+[7]: /api-reference/message-verifications/get
+[8]: /api-reference/verification-usage-records/list-your-user
+[9]: /api-reference/verification-usage-records/list-organizations
+[10]: /models/message-verification

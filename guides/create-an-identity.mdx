@@ -1,0 +1,122 @@
+---
+title: Create an identity
+icon: id-card
+---
+
+In this guide you will learn how to create an [identity][4]
+in a [space][3]. This is a prerequisite to compute [voiceprints][7]
+or perform [identity verifications][8].
+
+<Tip>
+  If you are unfamiliar with these concepts, follow their
+  links or read the [API reference introduction][1].
+</Tip>
+
+**✦ Goal:** create an `identity` and store its reference for
+future use.
+
+## Prerequisites
+
+<Steps>
+  <Snippet file="prerequisites/set-up-your-http-client.mdx" />
+  <Snippet file="prerequisites/authenticate-using-your-credentials-or-api-keys.mdx" />
+  <Snippet file="prerequisites/gain-access-to-a-space.mdx" />
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Procedure
+
+<Steps>
+  <Step title="Create the identity">
+    Create the identity.  See the [API reference][5].
+
+    \<--- `owner` `space`
+
+    <Note>
+      You must choose the [handle][2] for the `identity`.
+      Optionally, you may choose the [alias][2].
+    </Note>
+
+    <Warning>
+      Personally Identifiable Information (PII) should not
+      be used as handles. Instead, use a transformation
+      of your internal IDs to easily and securely map
+      people across services.
+    </Warning>
+
+    ---> ✦ `identity`
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `POST`
+        - Path — `/spaces/{owner}/{space}/identities`
+        - Body — `application/json`
+
+        ```json
+        {
+          "handle": "{identity}"
+        }
+        ```
+      </Tab>
+      <Tab title="Response">
+        - Code — `201`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{identity}",
+          "alias": "...",
+          "createdAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Validation
+
+<Steps>
+  <Step title="Validate the identity details">
+    To validate that the identity has been correctly created,
+    retrieve and analyze its details. See the [API reference][6].
+
+    \<--- `owner` `space` `identity`
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/spaces/{owner}/{space}/identities/{identity}`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{identity}",
+          "alias": "...",
+          "duration": "...",
+          "voiceDuration": "...",
+          "frequency": ...,
+          "identity": null,
+          "uploadedAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="party-horn"></Step>
+</Steps>
+
+[1]: /api-reference/introduction
+[2]: /api-reference/ids-handles-and-aliases
+[3]: /api-reference/spaces
+[4]: /api-reference/identities
+[5]: /api-reference/identities/create
+[6]: /api-reference/identities/get
+[7]: /api-reference/voiceprints
+[8]: /api-reference/identity-verifications

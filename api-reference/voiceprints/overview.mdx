@@ -1,0 +1,42 @@
+---
+title: Voiceprints
+sidebarTitle: Overview
+openapi-schema: Voiceprint
+---
+
+Voiceprints belong to an [identity][4] and encapsulate the biometric
+characteristics of their voice, extracted from some of their
+[audios][3].
+
+Once computed, they can be used to perform [identity verifications][5].
+
+<Note>
+  **Access:** To manage a voiceprint,
+  you must have access to its [space][2].
+</Note>
+
+<Note>
+  **Isolation:** A voiceprint can only interact with
+  resources inside its [space][2].
+</Note>
+
+<Note>
+  **Composite handle:** Voiceprints are tightly related to their identity
+  and their handle is only unique in combination with them.
+  [Learn more][1].
+</Note>
+
+<Note>
+  **Model:** The extraction of the biometric characteristics
+  of the voice is powered by a specific version of a
+  [voiceprint model][6].
+</Note>
+
+## Fields
+
+[1]: /api-reference/ids-handles-and-aliases#composite-handles
+[2]: /api-reference/spaces
+[3]: /api-reference/audios
+[4]: /api-reference/identities
+[5]: /api-reference/identity-verifications
+[6]: /models/voiceprint

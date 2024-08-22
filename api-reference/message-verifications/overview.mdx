@@ -1,0 +1,48 @@
+---
+title: Message verifications
+sidebarTitle: Overview
+openapi-schema: MessageVerification
+---
+
+Message verifications analyze the content of an [audio][2]
+to validate that the message found matches the one expected.
+
+They can be used for knowledge-based or possession-based access
+control and to ensure that the audio is not pre-recorded.
+
+<Tip>
+  Message verifications can make recording-based spoofing
+  attempts unfeasible in [identity][4] and [authenticity
+  verifications][5] and introduce complementary authentication
+  factors.
+</Tip>
+
+<Note>
+  **Access:** To manage a verification,
+  you must have access to its [space][1].
+</Note>
+
+<Note>
+  **Isolation:** A verification can only interact with
+  resources inside its [space][1].
+</Note>
+
+<Note>
+  **Model:** The analysis and comparison of the messages
+  found with the ones expected is powered by a specific version
+  of a [message verification model][6].
+</Note>
+
+<Note>
+  **Score:** Confidence in a positive result
+  is represented by the [score][3].
+</Note>
+
+## Fields
+
+[1]: /api-reference/spaces
+[2]: /api-reference/audios
+[3]: /api-reference/verifications/scores
+[4]: /api-reference/identity-verifications
+[5]: /api-reference/authenticity-verifications
+[6]: /models/message-verification

@@ -1,0 +1,143 @@
+---
+title: Caller ID Use Case
+icon: phone-plus
+---
+
+In this page we explain how you can integrate your Caller ID System with 
+the Loccus AI voice verification service, in order to protect your clients
+from bot calls, identity fraud and advanced scam techniques.
+
+<Note>This is just a sample, meant to cover the general Caller ID use case. 
+You can tailor the use of our API to your exact needs! </Note>
+
+<Tip>Check the [Authenticity Best Practices page][5] for recommendations!</Tip>
+
+# Architecture
+You can use Loccus API to empower your Caller ID System security. 
+By promptly detecting synthetic voices, you can prevent fraud and
+protect your clients against advanced actors.
+We provide insightful results near real time, so you can integrate the voice verification in 
+your existing call flow, taking immediate actions if necessary, like warning the attacked client
+and protecting other clients from the same actor.
+
+
+You can integrate the voice verification service in different ways, depending on your needs:
+<CardGroup cols={2}>
+  <Card title="On Demand Analysis" icon="lock" href="/use-cases/authenticity/caller-id-authenticity-use-case#sample-on-demand-analysis-diagram">
+    Allow your users to manually select when a calls authenticity needs to be verified.
+  </Card>
+  <Card title="Automated Analysis" icon="repeat" href="/use-cases/authenticity/caller-id-authenticity-use-case#sample-automated-analysis-diagram">
+    Automatically Analyze unknown callers and potential thread actors.
+  </Card>
+</CardGroup>
+
+
+## Sample On Demand Analysis Diagram
+```mermaid
+sequenceDiagram
+box Call Flow
+actor Unknown Caller
+actor Caller ID Client
+end
+Unknown Caller ->> Caller ID Client: Start the call
+Caller ID Client -->> Unknown Caller: Answer the call
+Unknown Caller ->> Caller ID Client: Potentially Fraudulent Request
+note right of Caller ID Client: At this stage, the Client might<br>suspect fraud but it's unsure<br>about its authenticity, so<br>it requests a verification.
+create participant Caller ID System
+Caller ID Client ->> Caller ID System: Voice Sample to Analyze
+create participant Loccus AI
+Caller ID System ->> Loccus AI: Audio
+destroy Loccus AI
+Loccus AI -->> Caller ID System: Verification Result
+destroy Caller ID System
+note over Caller ID System: The System can enrich the<br>results with past records of<br>the caller and user reports.
+Caller ID System -->> Caller ID Client: Interpreted Verification Result
+note right of Caller ID Client: With the complete information,<br> if the voice is detected fake,<br>the Client can decide whether<br>to preemptively end the call.
+Caller ID System ->> Caller ID System: Record and build<br>Caller ID reputation
+note right of Caller ID System: The system can record the <br>verification for identifying the<br>malicious actor in the future. 
+Caller ID Client --x Unknown Caller: End the call
+```
+
+## Sample Automated Analysis Diagram
+```mermaid
+sequenceDiagram
+box Call Flow
+actor Unknown Caller
+actor Caller ID Client
+end
+Unknown Caller ->> Caller ID Client: Start the call
+Caller ID Client -->> Unknown Caller: Answer the call
+create participant Caller ID System
+Caller ID Client ->> Caller ID System: Caller Identification
+note over Caller ID Client, Caller ID System: The caller is initially identified. If it's unknown,<br>or malicious, start verifying all its voice.
+loop Call Established
+    Unknown Caller ->> Caller ID Client: Audio
+    Caller ID Client ->> Caller ID System: Audio
+    create participant Loccus AI
+    Caller ID System ->> Loccus AI: Audio
+    destroy Loccus AI
+    Loccus AI -->> Caller ID System: Verification Result
+    Caller ID System -->> Caller ID Client: Interpreted Verification Result
+    note left of Caller ID Client: If the voice is detected fake,<br>the Client can decide whether<br>to preemptively end the call.
+    Caller ID Client --x Unknown Caller: End the call
+    note left of Caller ID System: The system can record the <br>verification for identifying the<br>malicious actor in the future. 
+    Caller ID System ->> Caller ID System: Record and build<br>Caller ID reputation
+end
+```
+
+## Integration Steps
+In order to use this functionality, you need to perform this four steps:
+<Steps>
+  <Step title="Record the voice">
+    You need to have the record of the client call. 
+    
+    <Note>We can process recordings of different quality and formats, please check the [media file requirements][1].</Note>
+  </Step>
+  <Step title="Send the voice for verification">
+    You can send the voice for verification using our API. 
+    Please check the [guide for performing an authenticity verification][2].
+    We will return the [verification scores and subscores][3], which provide insights of whether the voice is synthetic, replayed, etc.
+  </Step>
+  <Step title="Properly Inform the User">
+    Once you have all the relevant data, you can decide which actions to take based on your business logic. For instance, you could warn the user via a sound or GUI.
+    <Note>Check the [verification thresholds page][4] for reference and recommendations on interpreting the results.</Note>
+  </Step>
+  <Step title="Build the caller ID profile">
+    You can use the verification data for building the caller ID profile and preventing future fraud.
+    <Tip>Refer to the [List Chunks Endpoint][7] for detailed information about the moments when the audio is real or not.</Tip>
+  </Step>
+</Steps>
+
+# Administration
+The Loccus Console provides a graphical interface that allows your team to 
+effectively manage the Loccus Platform Service. API endpoints are also available for 
+administration and platform monitoring 
+<Tip>Check [usage statistics][8] and [usage records][9] for more details.</Tip>
+```mermaid
+flowchart LR
+    A[🕵️ Security Team] <-->|Cyber Thread Intelligence| C(💻 Loccus Console)
+    B[💼 Managers] <-->|Reporting| C
+    E[👨‍💻 System Administrators] -->|Manage| C 
+    C <--> D(⚙️ Loccus API)
+```
+<Card title="Security Team" icon="shield-halved">
+Mitigate AI fraud risk, and gather more Thread Intelligence based on evolving TTPs of top actors.
+Monitor the fraudulent calls, identify key security improvement points and raise awareness of new types of 
+cyber attacks.
+</Card>
+<Card title="Managers" icon="briefcase">
+Monitor fraud KPIs and leverage voice insights for internal and external reporting.
+</Card>
+<Card title="System Administrators" icon="computer">
+Easily configure and manage the Loccus Platform usage, including IAM and retention policies.
+</Card>
+
+[1]: /api-reference/voice-samples/requirements
+[2]: /guides/perform-a-verification/authenticity
+[3]: /api-reference/verifications/scores
+[4]: /api-reference/verifications/thresholds
+[5]: /use-cases/authenticity/authenticity-best-practices
+[6]: /api-reference/voice-samples/requirements#voice-activity
+[7]: /api-reference/authenticity-verifications/list-chunks
+[8]: /api-reference/usage-statistics/overview
+[9]: /api-reference/usage-records/overview

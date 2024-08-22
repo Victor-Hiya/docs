@@ -1,91 +1,388 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Loccus",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/assets/logo/dark.svg",
+    "light": "/assets/logo/light.svg"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/assets/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#23b693",
+    "light": "#2ce4b8",
+    "dark": "#1a896e",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#1a896e",
+      "to": "#2ce4b8"
     }
   },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
-    }
-  ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+  "api": {
+    "maintainOrder": true
+  },
+  "openapi": "https://storage.googleapis.com/loccus-docs/platform/external/2024.06.r1-beta.yaml",
+  "primaryTab": {
+    "name": "Guides"
   },
   "tabs": [
     {
+      "name": "Use Cases",
+      "url": "use-cases"
+    },
+    {
       "name": "API Reference",
       "url": "api-reference"
-    }
-  ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "name": "Model Index",
+      "url": "models"
     },
     {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "🎉 Loccus.ai is now part of Hiya Inc.!",
+      "url": "https://www.hiya.com/press-releases/hiya-acquires-deepfake-voice-detection-leader-loccus-ai"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Getting Started",
+      "pages": ["guides/introduction"]
+    },
+    {
+      "group": "Authentication",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "guides/authenticate-using-credentials",
+        "guides/authenticate-using-api-keys"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Speech Data",
+      "pages": ["guides/upload-an-audio", "guides/create-an-identity"]
+    },
+    {
+      "group": "Results",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "guides/compute-a-voiceprint",
+        {
+          "group": "Perform a verification",
+          "icon": "shield-check",
+          "pages": [
+            "guides/perform-a-verification/overview",
+            "guides/perform-a-verification/identity",
+            "guides/perform-a-verification/authenticity",
+            "guides/perform-a-verification/message"
+          ]
+        }
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "Getting Started",
+      "pages": ["use-cases/introduction"]
+    },
+    {
+      "group": "Authenticity Verification",
       "pages": [
-        "api-reference/introduction"
+        "use-cases/authenticity/basic-authenticity-use-case",
+        "use-cases/authenticity/call-center-authenticity-use-case",
+        "use-cases/authenticity/caller-id-authenticity-use-case",
+        "use-cases/authenticity/authenticity-best-practices"
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Identity Verification",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "use-cases/identity/basic-identity-use-case",
+        "use-cases/identity/identity-best-practices"
+      ]
+    },
+    {
+      "group": "Misc",
+      "pages": ["use-cases/testing", "use-cases/frequently-asked-questions"]
+    },
+    {
+      "group": "Getting Started",
+      "pages": [
+        "api-reference/introduction",
+        "api-reference/openapi-definition",
+        "api-reference/ids-handles-and-aliases",
+        "api-reference/custom-field-formats"
+      ]
+    },
+    {
+      "group": "Authentication",
+      "pages": [
+        "api-reference/bearer-tokens",
+        {
+          "group": "Credentials",
+          "icon": "pen-field",
+          "pages": [
+            "api-reference/credentials/overview",
+            "api-reference/credentials/sign-in",
+            "api-reference/credentials/update-password"
+          ]
+        },
+        {
+          "group": "API keys",
+          "icon": "key",
+          "pages": [
+            "api-reference/api-keys/overview",
+            "api-reference/api-keys/list",
+            "api-reference/api-keys/create",
+            "api-reference/api-keys/get",
+            "api-reference/api-keys/update",
+            "api-reference/api-keys/delete"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Structure and Access",
+      "pages": [
+        {
+          "group": "Your user",
+          "icon": "circle-user",
+          "pages": [
+            "api-reference/your-user/overview",
+            "api-reference/your-user/get",
+            "api-reference/your-user/update",
+            "api-reference/your-user/list-organizations",
+            "api-reference/your-user/list-spaces"
+          ]
+        },
+        {
+          "group": "Users",
+          "icon": "user",
+          "pages": ["api-reference/users/overview", "api-reference/users/get"]
+        },
+        {
+          "group": "Organizations",
+          "icon": "sitemap",
+          "pages": [
+            "api-reference/organizations/overview",
+            "api-reference/organizations/get",
+            "api-reference/organizations/update",
+            "api-reference/organizations/list-members",
+            "api-reference/organizations/list-spaces"
+          ]
+        },
+        {
+          "group": "Spaces",
+          "icon": "square-dashed",
+          "pages": [
+            "api-reference/spaces/overview",
+            "api-reference/spaces/get",
+            "api-reference/spaces/update",
+            "api-reference/spaces/get_config",
+            "api-reference/spaces/update_config"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Speech Data",
+      "pages": [
+        {
+          "group": "Audios",
+          "icon": "comment",
+          "pages": [
+            "api-reference/audios/overview",
+            "api-reference/audios/requirements",
+            "api-reference/audios/base64-encoding",
+            "api-reference/audios/list",
+            "api-reference/audios/create",
+            "api-reference/audios/get",
+            "api-reference/audios/update",
+            "api-reference/audios/identify",
+            "api-reference/audios/download-binary-file",
+            "api-reference/audios/upload-binary-file",
+            "api-reference/audios/delete-binary-file",
+            "api-reference/audios/list-voiceprints",
+            "api-reference/audios/list-verifications"
+          ]
+        },
+        {
+          "group": "Identities",
+          "icon": "id-card",
+          "pages": [
+            "api-reference/identities/overview",
+            "api-reference/identities/list",
+            "api-reference/identities/create",
+            "api-reference/identities/get",
+            "api-reference/identities/update",
+            "api-reference/identities/delete",
+            "api-reference/identities/list-audios",
+            "api-reference/identities/list-voiceprints"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Results",
+      "pages": [
+        {
+          "group": "Voiceprints",
+          "icon": "fingerprint",
+          "pages": [
+            "api-reference/voiceprints/overview",
+            "api-reference/voiceprints/list",
+            "api-reference/voiceprints/create",
+            "api-reference/voiceprints/get",
+            "api-reference/voiceprints/update",
+            "api-reference/voiceprints/delete",
+            "api-reference/voiceprints/compute",
+            "api-reference/voiceprints/list-audios",
+            "api-reference/voiceprints/add-audio",
+            "api-reference/voiceprints/remove-audio",
+            "api-reference/voiceprints/list-verifications"
+          ]
+        },
+        {
+          "group": "Verifications",
+          "icon": "shield-check",
+          "pages": [
+            "api-reference/verifications/overview",
+            "api-reference/verifications/scores",
+            "api-reference/verifications/thresholds",
+            "api-reference/verifications/list",
+            {
+              "group": "Identity",
+              "icon": "id-card",
+              "pages": [
+                "api-reference/identity-verifications/overview",
+                "api-reference/identity-verifications/list",
+                "api-reference/identity-verifications/create",
+                "api-reference/identity-verifications/get",
+                "api-reference/identity-verifications/update"
+              ]
+            },
+            {
+              "group": "Authenticity",
+              "icon": "robot-astromech",
+              "pages": [
+                "api-reference/authenticity-verifications/overview",
+                "api-reference/authenticity-verifications/list",
+                "api-reference/authenticity-verifications/create",
+                "api-reference/authenticity-verifications/get",
+                "api-reference/authenticity-verifications/update",
+                "api-reference/authenticity-verifications/list-chunks"
+              ]
+            },
+            {
+              "group": "Message",
+              "icon": "message-lines",
+              "pages": [
+                "api-reference/message-verifications/overview",
+                "api-reference/message-verifications/list",
+                "api-reference/message-verifications/create",
+                "api-reference/message-verifications/get",
+                "api-reference/message-verifications/update"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Usage",
+      "pages": [
+        {
+          "group": "Usage statistics",
+          "icon": "chart-column",
+          "pages": [
+            "api-reference/usage-statistics/overview",
+            "api-reference/usage-statistics/get"
+          ]
+        },
+        {
+          "group": "Usage records",
+          "icon": "book-open-cover",
+          "pages": [
+            "api-reference/usage-records/overview",
+            {
+              "group": "Voiceprint",
+              "icon": "fingerprint",
+              "pages": [
+                "api-reference/voiceprint-usage-records/overview",
+                "api-reference/voiceprint-usage-records/list-your-user",
+                "api-reference/voiceprint-usage-records/list-organizations",
+                "api-reference/voiceprint-usage-records/get"
+              ]
+            },
+            {
+              "group": "Verification",
+              "icon": "shield-check",
+              "pages": [
+                "api-reference/verification-usage-records/overview",
+                "api-reference/verification-usage-records/list-your-user",
+                "api-reference/verification-usage-records/list-organizations",
+                "api-reference/verification-usage-records/get"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Getting Started",
+      "pages": ["models/introduction"]
+    },
+    {
+      "group": "Voiceprint",
+      "pages": [
+        "models/voiceprint/overview",
+        {
+          "group": "Models",
+          "icon": "list",
+          "pages": [
+            {
+              "group": "default",
+              "pages": ["models/voiceprint/default/v1"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Verification",
+      "pages": ["models/verification/overview"]
+    },
+    {
+      "group": "Identity verification",
+      "pages": [
+        "models/identity-verification/overview",
+        {
+          "group": "Models",
+          "icon": "list",
+          "pages": ["models/identity-verification/default/v1.0"]
+        }
+      ]
+    },
+    {
+      "group": "Authenticity verification",
+      "pages": [
+        "models/authenticity-verification/overview",
+        {
+          "group": "Models",
+          "icon": "list",
+          "pages": [
+            "models/authenticity-verification/default/v7",
+            "models/authenticity-verification/telephone/v4"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Message verification",
+      "pages": [
+        "models/message-verification/overview",
+        {
+          "group": "Models",
+          "icon": "list",
+          "pages": ["models/message-verification/default/v2"]
+        }
       ]
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "website": "https://www.loccus.ai",
+    "linkedin": "https://www.linkedin.com/company/loccus-ai",
+    "github": "https://github.com/loccus-ai"
   }
 }

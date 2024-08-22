@@ -1,0 +1,47 @@
+---
+title: Media file encoding in Base64
+sidebarTitle: Base64 encoding
+---
+
+To upload a media file as an audio it must be properly encoded
+as a Base64 string, as defined in [RFC 4648][1]; without
+whitespace, line breaks nor any other unsupported characters.
+
+## Encoding examples
+
+The following examples read `file.mp3` and print it as a valid
+Base64 string.
+
+<Warning>
+  Base64 encoding methods vary between environments and
+  programming languages.
+</Warning>
+
+<CodeGroup>
+  ```bash Linux
+  base64 -w 0 {file.mp3}
+  ```
+
+  ```bash macOS
+  base64 --input {file.mp3}
+  ```
+
+  ```javascript JavaScript
+  const fs = require("fs");
+
+  const content = fs.readFileSync("{file.mp3}");
+  const encodedString = content.toString("base64");
+
+  console.log(encodedString);
+  ```
+  ```python Python
+  from base64 import b64encode
+
+  content = open("{file.mp3}", "rb").read()
+  encoded_string = b64encode(content).decode()
+
+  print(encoded_string)
+  ```
+</CodeGroup>
+
+[1]: https://datatracker.ietf.org/doc/html/rfc4648

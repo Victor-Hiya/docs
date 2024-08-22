@@ -1,0 +1,21 @@
+---
+title: Upload the binary file of an audio
+sidebarTitle: Upload binary file
+description: Upload the binary file of an audio.
+openapi: post /spaces/{owner}/{space}/audios/{audio}/file
+---
+
+<Warning>
+  To upload a media file as an audio, it must meet
+  the [specified requirements][1].
+</Warning>
+
+<Note>
+  An audio can only have one binary file, either provided
+  as a [Base64 string][2] on [audio creation][3] or uploaded
+  raw in a separate request.
+</Note>
+
+[1]: /api-reference/audios/requirements
+[2]: /api-reference/audios/base64-encoding
+[3]: /api-reference/audios/create

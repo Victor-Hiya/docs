@@ -1,0 +1,52 @@
+---
+title: Identity verifications
+sidebarTitle: Overview
+openapi-schema: IdentityVerification
+---
+
+Identity verifications analyze the similarity between
+the biometric characteristics of an [audio][2] and
+those encapsulated by a [voiceprint][4] to validate that
+they belong to the same [identity][3].
+
+They can be used for biometric-based access control or to
+validate that the voice of a media fragment belongs to a
+certain speaker.
+
+<Tip>
+  Combining identity verifications with [authenticity][6] and
+  [message verifications][7] can greatly improve robustness
+  against spoofing attempts.
+</Tip>
+
+<Note>
+  **Access:** To manage a verification,
+  you must have access to its [space][1].
+</Note>
+
+<Note>
+  **Isolation:** A verification can only interact with
+  resources inside its [space][1].
+</Note>
+
+<Note>
+  **Model:** The analysis and comparison of the biometric
+  characteristics of the voice is powered by a specific version
+  of an [identity verification model][8].
+</Note>
+
+<Note>
+  **Score:** Confidence in a positive result
+  is represented by the [score][5].
+</Note>
+
+## Fields
+
+[1]: /api-reference/spaces
+[2]: /api-reference/audios
+[3]: /api-reference/identity
+[4]: /api-reference/voiceprints
+[5]: /api-reference/verifications/scores
+[6]: /api-reference/authenticity-verifications
+[7]: /api-reference/message-verifications
+[8]: /models/identity-verification

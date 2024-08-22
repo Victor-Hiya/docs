@@ -1,0 +1,64 @@
+---
+title: Verifications
+sidebarTitle: Overview
+openapi-schema: Verification
+---
+
+Verifications are performed on [audios][2] to analyze and
+measure certain characteristics, which vary depending on the
+type of verification.
+
+The generic verifications endpoint provides a unified view
+of all the different types, displaying only their common fields.
+
+<Note>
+  **Access:** To manage a verification,
+  you must have access to its [space][1].
+</Note>
+
+<Note>
+  **Isolation:** Verifications can only interact with
+  resources inside its [space][1].
+</Note>
+
+<Note>
+  **Model:** The analysis of the relevant characteristics
+  is powered by a specific version of a [verification model][9].
+</Note>
+
+<Note>
+  **Score:** Confidence in a positive result
+  is represented by the [score][5].
+</Note>
+
+## Types
+
+<AccordionGroup>
+  <Accordion title="Identity" icon="id-card">
+    [Identity verifications][6] analyze the similarity between
+    the biometric characteristics of an [audio][2] and
+    those encapsulated by a [voiceprint][4] to validate that
+    they belong to the same [identity][3].
+  </Accordion>
+  <Accordion title="Authenticity" icon="robot-astromech">
+    [Authenticity verifications][7] analyze several characteristics
+    related to the authenticity and liveliness of an [audio][2]
+    to validate that the voice belongs to a human speaking live.
+  </Accordion>
+  <Accordion title="Message" icon="message-lines">
+    [Message verifications][8] analyze the content of an [audio][2]
+    to validate that the message found matches the one expected.
+  </Accordion>
+</AccordionGroup>
+
+## Fields
+
+[1]: /api-reference/spaces
+[2]: /api-reference/audios
+[3]: /api-reference/identity
+[4]: /api-reference/voiceprints
+[5]: /api-reference/verifications/scores
+[6]: /api-reference/identity-verifications
+[7]: /api-reference/authenticity-verifications
+[8]: /api-reference/message-verifications
+[9]: /models/verification

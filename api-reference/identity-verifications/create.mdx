@@ -1,0 +1,20 @@
+---
+title: Create an identity verification
+sidebarTitle: Create
+description: Create a new identity verification by providing its details.
+openapi: post /spaces/{owner}/{space}/verifications/identity
+---
+
+<Tip>
+  The platform automatically selects appropriate
+  [identity verification models][2] for the chosen
+  voiceprints.
+</Tip>
+
+<Note>
+  **Score:** Confidence in a positive result
+  is represented by the [score][1].
+</Note>
+
+[1]: /api-reference/verifications/scores
+[2]: /models/identity-verification

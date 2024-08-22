@@ -1,0 +1,222 @@
+---
+title: Perform an authenticity verification
+sidebarTitle: Authenticity
+icon: robot-astromech
+---
+
+In this guide you will learn how to perform an [authenticity
+verification][5] on an [audio][3].
+
+<Tip>
+  If you are unfamiliar with these concepts, follow their
+  links or read the [API reference introduction][1].
+</Tip>
+
+**✦ Goal:** perform an authenticity `verification` and obtain
+its `score`.
+
+## Prerequisites
+
+<Steps>
+  <Snippet file="prerequisites/set-up-your-http-client.mdx" />
+  <Snippet file="prerequisites/authenticate-using-your-credentials-or-api-keys.mdx" />
+  <Snippet file="prerequisites/gain-access-to-a-space.mdx" />
+  <Snippet file="prerequisites/upload-an-audio.mdx" />
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Procedure
+
+<Steps>
+  <Step title="Choose the authenticity verification model">
+    Check the available models and choose the one
+    you will use to perform the verification.
+    See the [model index][10].
+
+    <Warning>
+      Each model has its own requirements. If you do not choose
+      an appropriate one for your audio, you will receive an
+      error when you attempt to perform the verification.
+    </Warning>
+
+    ---> `model`
+  </Step>
+  <Step title="Perform the authenticity verification">
+    Perform the authenticity verification on the uploaded
+    audio with the chosen model. See the [API reference][6].
+
+    \<--- `owner` `space` `model` `audio`
+
+    <Note>
+      Optionally, you may choose the [alias][2]
+      for the `verification`.
+    </Note>
+
+    <Note>
+      In verifications, the latest model version
+      is automatically selected.
+    </Note>
+
+    ---> ✦ `verification` `version` ✦ `score`
+
+    <Note>
+      In verifications, confidence in a positive result
+      is represented by their scores. [Learn more][4].
+    </Note>
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `POST`
+        - Path — `/spaces/{owner}/{space}/verifications/authenticity`
+        - Body — `application/json`
+
+        ```json
+        {
+          "model": "{model}",
+          "audio": "{audio}"
+        }
+        ```
+      </Tab>
+      <Tab title="Response">
+        - Code — `201`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{verification}",
+          "alias": "...",
+          "model": {
+            "handle": "{model}",
+            "version": "{version}"
+          },
+          "audio": {
+            "handle": "{audio}",
+            "alias": "..."
+          },
+          "score": {score},
+          "performedAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Validation
+
+<Steps>
+  <Step title="Validate the authenticity verification details">
+    To validate that the authenticity verification has been
+    correctly performed, retrieve and analyze its details.
+    See the [API reference][7].
+
+    \<--- `owner` `space` `verification`
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/spaces/{owner}/{space}/verifications/authenticity/{verification}`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{verification}",
+          "alias": "...",
+          "model": {
+            "handle": "{model}",
+            "version": "{version}"
+          },
+          "audio": {
+            "handle": "{audio}",
+            "alias": "..."
+          },
+          "score": ...,
+          "performedAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Validate the verification usage records">
+    To validate that the authenticity verification has been
+    correctly performed, retrieve and analyze the verification
+    usage records. See the [API reference][9].
+
+    \<--- `owner`
+
+    <Warning>
+      This step assumes that the `owner` is an organization.
+      If you are the owner, you must use a slightly different
+      endpoint. See the [API reference][8].
+    </Warning>
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/orgs/{owner}/records/verification`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        [
+          ...,
+          {
+            "id": "...",
+            "handle": "...",
+            "actor": {
+              "handle": "...",
+              "alias": "..."
+            },
+            "type": "authenticity",
+            "model": {
+              "handle": "{model}",
+              "version": "{version}"
+            },
+            "verification": {
+              "handle": "{verification}",
+              "alias": "...",
+              "type": "authenticity"
+            },
+            "space": {
+              "handle": "{space}",
+              "alias": "...",
+              "owner": {
+                "type": "...",
+                "handle": "{owner}",
+                "alias": "..."
+              }
+            },
+            "owner": {
+              "type": "...",
+              "handle": "{owner}",
+              "alias": "..."
+            },
+            "performedAt": "..."
+          },
+          ...
+        ]
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="party-horn"></Step>
+</Steps>
+
+[1]: /api-reference/introduction
+[2]: /api-reference/ids-handles-and-aliases
+[3]: /api-reference/audios
+[4]: /api-reference/verifications/scores
+[5]: /api-reference/authenticity-verifications
+[6]: /api-reference/authenticity-verifications/create
+[7]: /api-reference/authenticity-verifications/get
+[8]: /api-reference/verification-usage-records/list-your-user
+[9]: /api-reference/verification-usage-records/list-organizations
+[10]: /models/authenticity-verification

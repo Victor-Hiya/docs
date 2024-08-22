@@ -1,0 +1,360 @@
+---
+title: Compute a voiceprint
+icon: fingerprint
+---
+
+In this guide you will learn how to compute a [voiceprint][6]
+of an [identity][5] in a [space][3], using an [audio][4]. This
+is a prerequisite to perform [identity verifications][11].
+
+<Tip>
+  If you are unfamiliar with these concepts, follow their
+  links or read the [API reference introduction][1].
+</Tip>
+
+**✦ Goal:** compute a `voiceprint` and store its reference for
+future use.
+
+## Prerequisites
+
+<Steps>
+  <Snippet file="prerequisites/set-up-your-http-client.mdx" />
+  <Snippet file="prerequisites/authenticate-using-your-credentials-or-api-keys.mdx" />
+  <Snippet file="prerequisites/gain-access-to-a-space.mdx" />
+  <Snippet file="prerequisites/create-an-identity.mdx" />
+  <Snippet file="prerequisites/upload-an-audio.mdx" />
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+<Tip>
+  To focus on the computing of the voiceprint, this guide expects
+  an audio to be uploaded as a prerequisite. However, it is common
+  to upload the audios as part of the voiceprint computing process,
+  which allows for better step-by-step validation.
+</Tip>
+
+## Procedure
+
+<Steps>
+  <Step title="Choose the voiceprint model">
+    Check the available models and choose the one
+    you will use to compute the voiceprint.
+    See the [model index][14].
+
+    <Warning>
+      Each model has its own requirements. If you do not choose
+      an appropriate one for your audio, you will receive an
+      error when you attempt to add it to the voiceprint.
+    </Warning>
+
+    ---> `model` `version`
+  </Step>
+  <Step title="Create the voiceprint">
+    Create the voiceprint for the identity. See the [API reference][7].
+
+    \<--- `owner` `space` `model` `version` `identity`
+
+    <Note>
+      You must choose the [handle][2] for the `voiceprint`.
+      Optionally, you may choose the [alias][2].
+    </Note>
+
+    <Warning>
+      It is not recommended to use globally unique handles
+      for voiceprints. Instead, use a predictable pattern.
+      A good starting point is to have a `main` voiceprint
+      for each identity.
+    </Warning>
+
+    ---> `voiceprint` (not yet ready for verifications)
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `POST`
+        - Path — `/spaces/{owner}/{space}/identities`
+        - Body — `application/json`
+
+        ```json
+        {
+          "handle": "{voiceprint}",
+          "model": {
+            "handle": "{model}",
+            "version": "{version}"
+          },
+          "identity": "{identity}",
+          "minAudios": 1
+        }
+        ```
+
+        <Tip>
+          This guide sets the minimum required audios of the
+          voiceprint to 1. If that does not fit your use case,
+          you will need to repeat step 3 with different audios.
+        </Tip>
+      </Tab>
+      <Tab title="Response">
+        - Code — `201`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{voiceprint}",
+          "alias": "...",
+          "model": {
+            "handle": "{model}",
+            "version": "{version}"
+          },
+          "identity": {
+            "handle": "{identity}",
+            "alias": "..."
+          },
+          "minAudios": 1,
+          "audios": 0,
+          "totalDuration": "...",
+          "totalVoiceDuration": "...",
+          "state": "notComputable",
+          "createdAt": "...",
+          "computedAt": "..."
+        }
+        ```
+
+        <Note>
+          The `notComputable` state indicates that the
+          model requirements are not yet satisfied. Voice
+          audios must be added before it can be computed.
+        </Note>
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Add the audio">
+    Add the audio to the voiceprint. See the [API reference][10].
+
+    \<--- `owner` `space` `identity` `voiceprint` `audio`
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `POST`
+        - Path — `/spaces/{owner}/{space}/voiceprints/{identity}/{voiceprint}` <br/>
+                   —> `/audios/{audio}`
+        <Tip>
+          If you wish to add more audios to the voiceprint,
+          just repeat this step.
+        </Tip>
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{voiceprint}",
+          "alias": "...",
+          "model": {
+            "handle": "{model}",
+            "version": "{version}"
+          },
+          "identity": {
+            "handle": "{identity}",
+            "alias": "..."
+          },
+          "minAudios": 1,
+          "audios": 1,
+          "totalDuration": "...",
+          "totalVoiceDuration": "...",
+          "state": "computable",
+          "createdAt": "...",
+          "computedAt": "..."
+        }
+        ```
+
+        <Note>
+          The `computable` state indicates that the
+          model requirements are satisfied. More audios
+          can be added, but it can already be computed.
+        </Note>
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Compute the voiceprint">
+    Compute the voiceprint. See the [API reference][9].
+
+    \<--- `owner` `space` `identity` `voiceprint`
+
+    ---> ✦ `voiceprint` (ready for verifications)
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `POST`
+        - Path — `/spaces/{owner}/{space}/voiceprints/{identity}/{voiceprint}` <br/>
+                   —> `:compute`
+        <Warning>
+          A voiceprint can only be computed once and the operation is
+          irreversible. Audios cannot be added or removed afterwards.
+        </Warning>
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{voiceprint}",
+          "alias": "...",
+          "model": {
+            "handle": "{model}",
+            "version": "{version}"
+          },
+          "identity": {
+            "handle": "{identity}",
+            "alias": "..."
+          },
+          "minAudios": 1,
+          "audios": 1,
+          "totalDuration": "...",
+          "totalVoiceDuration": "...",
+          "state": "computed",
+          "createdAt": "...",
+          "computedAt": "..."
+        }
+        ```
+
+        <Note>
+          The `computed` state indicates that the voiceprint
+          can be used to perform identity verifications.
+          No more audios can be added.
+        </Note>
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Validation
+
+<Steps>
+  <Step title="Validate the voiceprint details">
+    To validate that the voiceprint has been correctly computed,
+    retrieve and analyze its details. See the [API reference][8].
+
+    \<--- `owner` `space` `identity` `voiceprint`
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/spaces/{owner}/{space}/voiceprints/{identity}/{voiceprint}`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{voiceprint}",
+          "alias": "...",
+          "model": {
+            "handle": "{model}",
+            "version": "{version}"
+          },
+          "identity": {
+            "handle": "{identity}",
+            "alias": "..."
+          },
+          "minAudios": 1,
+          "audios": 1,
+          "totalDuration": "...",
+          "totalVoiceDuration": "...",
+          "state": "computed",
+          "createdAt": "...",
+          "computedAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Validate the voiceprint usage records">
+    To validate that the voiceprint has been correctly
+    computed, retrieve and analyze the voiceprint
+    usage records. See the [API reference][13].
+
+    \<--- `owner`
+
+    <Warning>
+      This step assumes that the `owner` is an organization.
+      If you are the owner, you must use a slightly different
+      endpoint. See the [API reference][12].
+    </Warning>
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/orgs/{owner}/records/voiceprint`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        [
+          ...,
+          {
+            "id": "...",
+            "handle": "...",
+            "actor": {
+              "handle": "...",
+              "alias": "..."
+            },
+            "model": {
+              "handle": "{model}",
+              "version": "{version}"
+            },
+            "voiceprint": {
+              "handle": "{voiceprint}",
+              "alias": "...",
+              "identity": {
+                "handle": "{identity}",
+                "alias": "..."
+              }
+            },
+            "space": {
+              "handle": "{space}",
+              "alias": "...",
+              "owner": {
+                "type": "...",
+                "handle": "{owner}",
+                "alias": "..."
+              }
+            },
+            "owner": {
+              "type": "...",
+              "handle": "{owner}",
+              "alias": "..."
+            },
+            "computedAt": "..."
+          },
+          ...
+        ]
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="party-horn"></Step>
+</Steps>
+
+[1]: /api-reference/introduction
+[2]: /api-reference/ids-handles-and-aliases
+[3]: /api-reference/spaces
+[4]: /api-reference/audios
+[5]: /api-reference/identities
+[6]: /api-reference/voiceprints
+[7]: /api-reference/voiceprints/create
+[8]: /api-reference/voiceprints/get
+[9]: /api-reference/voiceprints/compute
+[10]: /api-reference/voiceprints/add-audio
+[11]: /api-reference/identity-verifications
+[12]: /api-reference/voiceprint-usage-records/list-your-user
+[13]: /api-reference/voiceprint-usage-records/list-organizations
+[14]: /models/voiceprint

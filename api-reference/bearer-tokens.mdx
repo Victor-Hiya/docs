@@ -1,0 +1,48 @@
+---
+title: Bearer tokens
+icon: coin-front
+---
+
+Most API requests must be properly authenticated in order to be accepted
+and processed by the platform. Bearer tokens are used as a proof of
+identity and must be passed through the [Authorization header][1]
+in your HTTP requests.
+
+```http
+Authorization: Bearer {token}
+```
+Bearer tokens come in two flavours, each better suited for certain use cases.
+
+<CardGroup cols={2}>
+  <Card title="Short-lived tokens" icon="hourglass-clock">
+    Expire after some time, which currently is 24 hours.
+    They are best suited for authenticating humans.
+  </Card>
+  <Card title="Long-lived tokens" icon="infinity">
+    Do not expire, but can be revoked. They are best suited for
+    service-to-service communication.
+  </Card>
+</CardGroup>
+
+## Obtaining tokens
+
+Different methods must be used to obtain the different kinds of tokens.
+
+<AccordionGroup>
+  <Accordion title="Obtain short-lived tokens using your credentials." icon="pen-field">
+    To obtain a short-lived token, [sign in][3] using [your credentials][2] to create
+    a temporary session, which will have an associated bearer token. 
+  </Accordion>
+  <Accordion title="Obtain long-lived tokens using your API keys." icon="key">
+    To obtain a long-lived token, use a different form of authentication to
+    [create][6] an [API key][4] or to [list][5] your existing ones, which will have
+    associated bearer tokens.
+  </Accordion>
+</AccordionGroup>
+
+[1]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization
+[2]: /api-reference/credentials
+[3]: /api-reference/credentials/sign-in
+[4]: /api-reference/api-keys
+[5]: /api-reference/api-keys/list
+[6]: /api-reference/api-keys/create

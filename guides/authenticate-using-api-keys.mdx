@@ -1,0 +1,168 @@
+---
+title: Authenticate using your API keys
+sidebarTitle: Authenticate using API keys
+icon: key
+---
+
+In this guide you will learn how to authenticate your API
+requests with [long-lived tokens][3] obtained by creating
+or retrieving an [API key][4]. This is a
+prerequisite for the other guides.
+
+<Tip>
+  If you are unfamiliar with these concepts, follow their
+  links or read the [API reference introduction][1].
+</Tip>
+
+**✦ Goal:** obtain a long-lived `token` using your API keys
+and use it for **authentication**.
+
+## Prerequisites
+
+<Steps>
+  <Snippet file="prerequisites/set-up-your-http-client.mdx" />
+  <Snippet file="prerequisites/authenticate-using-your-credentials.mdx" />
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Procedure
+
+<Steps>
+  <Step title="Create the API key">
+    Create the API key to obtain the long-lived token associated
+    with it. Skip this step if you already have an API key.
+    See the [API reference][5].
+
+    <Note>
+      You must choose the [handle][2] for the `key`.
+      Optionally, you may choose the [alias][2].
+    </Note>
+
+    ---> `key` `token`
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `POST`
+        - Path — `/user/keys`
+        - Body — `application/json`
+
+        ```json
+        {
+          "handle": "{key}"
+        }
+        ```
+      </Tab>
+      <Tab title="Response">
+        - Code — `201`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{key}",
+          "alias": "...",
+          "token": "{token}",
+          "createdAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Get the API key">
+    Get the details of an existing API key to obtain the long-lived
+    token associated with it. Skip this step if you have just
+    created the API key. See the [API reference][6].
+
+    \<--- `key`
+
+    ---> `token`
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/user/keys/{key}`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{key}",
+          "alias": "...",
+          "token": "{token}",
+          "createdAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Authenticate with the token">
+    Add the token as a bearer token in the
+    [Authorization header][8]. Most API endpoints require
+    you to perform this step to authenticate yourself.
+    See the [API reference][3].
+
+    <Warning>
+      The token will continue to authenticate requests
+      until its API key is deleted.
+    </Warning>
+
+    \<--- `token`
+
+    ---> ✦ **authentication**
+
+    <Tabs>
+      <Tab title="Requests requiring authentication">
+        - Headers
+
+        ```http
+        Authorization: Bearer {token}
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Validations
+
+<Steps>
+  <Step title="Validate your user details">
+    To validate that authentication using your API keys
+    is working, get your user details with the long-lived
+    API key token you have obtained. See the [API reference][6].
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/user`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{user}",
+          "alias": "...",
+          "email": "...",
+          "createdAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="party-horn"></Step>
+</Steps>
+
+[1]: /api-reference/introduction
+[2]: /api-reference/ids-handles-and-aliases
+[3]: /api-reference/bearer-tokens
+[4]: /api-reference/api-keys
+[5]: /api-reference/api-keys/create
+[6]: /api-reference/api-keys/get
+[7]: /api-reference/your-user/get
+[8]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization

@@ -1,0 +1,205 @@
+---
+title: Migration guide
+---
+
+Migrating from **v1.0.0-alpha.20** to **v1.0.0-beta.1**.
+
+## Model information
+
+Model information has been migrated from the API to the documentation.
+
+The following endpoints are now deprecated:
+
+  - `https://api.loccus.ai/models/voiceprint`
+  - `https://api.loccus.ai/models/verification/identity`
+  - `https://api.loccus.ai/models/verification/authenticity`
+  - `https://api.loccus.ai/models/verification/message`
+
+In their place, the new [model index](/models/introduction) should be used.
+
+## Model selection
+
+Keeping up to date with verification model versions is now handled
+automatically by the API. Voiceprint model versions are still
+explicitly selected.
+
+When performing a verification, a model must be selected without
+specifying the version. The only models currently available are
+the `default` models, with more coming soon.
+
+### Performing a verification
+
+<Tabs>
+  <Tab title="New">
+    Request
+
+    ```json
+    {
+      ...,
+      "model": "default",
+      ...
+    }
+    ```
+
+    Response
+
+    ```json
+    {
+      ...,
+      "model": {
+        "handle": "default",
+        "version": "v1"
+      },
+      ...
+    }
+    ```
+  </Tab>
+  <Tab title="Old">
+    Request
+
+    ```json
+    {
+      ...,
+      "version": "v1",
+      ...
+    }
+    ```
+
+    Response
+
+    ```json
+    {
+      ...,
+      "version": "v1",
+      ...
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Creating a voiceprint
+
+<Tabs>
+  <Tab title="New">
+    Request
+
+    ```json
+    {
+      ...,
+      "model": {
+        "handle": "default",
+        "version": "v1"
+      },
+      ...
+    }
+    ```
+
+    Response
+
+    ```json
+    {
+      ...,
+      "model": {
+        "handle": "default",
+        "version": "v1"
+      },
+      ...
+    }
+    ```
+  </Tab>
+  <Tab title="Old">
+    Request
+
+    ```json
+    {
+      ...,
+      "version": "v1",
+      ...
+    }
+    ```
+
+    Response
+
+    ```json
+    {
+      ...,
+      "version": "v1",
+      ...
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Handle suffixes
+
+Previously, all the request fields referencing existing
+resources had a  `Handle` suffix. Since handles
+are the only valid way to reference resources,
+these suffixes have been removed.
+
+<Note>
+  The API reference will continue to explicitly describe
+  each of these fields as handles.
+</Note>
+
+### Resource reference fields
+
+<Tabs>
+  <Tab title="New">
+    Request
+
+    ```json
+    {
+      ...,
+      "identity": "identity-a",
+      "voiceprint": "voiceprint-a",
+      "audio": "audio-a",
+      ...
+    }
+    ```
+  </Tab>
+  <Tab title="Old">
+    Request
+
+    ```json
+    {
+      ...,
+      "identityHandle": "identity-a",
+      "voiceprintHandle": "voiceprint-a",
+      "sampleHandle": "sample-a",
+      ...
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Custom verbs syntax
+
+Using colons to separate custom verbs from the rest of the
+path is now mandatory. The new syntax was introduced in a
+previous update and the old syntax is now deprecated.
+
+### Actions with custom verbs
+
+<Tabs>
+  <Tab title="New">
+    Path — `/resources/resource-a:verb`
+  </Tab>
+  <Tab title="Old">
+    Path — `/resources/resource-a/verb`
+  </Tab>
+</Tabs>
+
+
+## Database reset
+
+The update from alpha to beta marks the last database reset
+we will perform. All the API resources will be cleared when
+the new version gets rolled out and the audio files
+will be permanently deleted after 30 days.
+
+<Warning>
+  The database reset includes API keys and credentials.
+  The original user and password shared must be used to
+  sign in for the first time.
+</Warning>

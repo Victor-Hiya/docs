@@ -1,0 +1,80 @@
+---
+title: Verification thresholds
+sidebarTitle: Thresholds
+---
+
+Thresholds are used to make decisions based on verification scores.
+They are not explicitly represented in the API because they are not
+part of the results, but of their interpretation.
+
+<AccordionGroup>
+  <Accordion title="Binary thresholds">
+    A common use-case is to block certain processes based on how
+    a verification score compares against a simple binary threshold.
+
+    **Example:** obtaining an identity verification score equal or
+    higher to 0.6 might be a required step to authenticate a person
+    against a given security system.
+  </Accordion>
+  <Accordion title="Multilevel thresholds">
+    Scores can be mapped to several possible outcomes
+    by employing multiple thresholds.
+
+    **Example:** a score between 0.4 and 0.7 might require additional
+    security measures compared to one higher than 0.7.
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+  Thresholds are implemented in the client systems to allow for maximum
+  flexibility in the business logic that reacts to the outcome of the
+  verifications performed.
+</Note>
+
+### Threshold selection
+
+#### 0.5 threshold -- Balance point
+
+Since a score of 0.5 represents an equal probability of a positive an a
+negative result, it is the point of maximum uncertainty and the natural
+choice for the threshold when the correct classification of positive and
+negative audios are equally important.
+
+<Tip>
+  The 0.5 threshold is a good starting point when there is no clear bias
+  towards security or usability.
+</Tip>
+
+#### Thresholds above 0.5 -- Higher security
+
+Higher thresholds are more strict and increase system security at the
+cost of usability.
+
+- **Higher security:** less negative audios will be falsely accepted as positives.
+- **Lower usability:** more positive audios will be falsely rejected as negatives.
+
+#### Thresholds below 0.5 -- Higher usability
+
+Lower thresholds are less strict and increase system usability at the
+cost of security.
+
+- **Higher usability:** less positive audios will be falsely rejected as negatives.
+- **Lower security:** more negative audios will be falsely accepted as positives.
+
+### Verification model accuracy
+
+When a system has a strict requirement for either the False Acceptance Rate
+(FAR) or the False Rejection Rate (FRR) the threshold must be selected
+considering the overall accuracy of the [verification model][5], introducing
+a bias towards security or usability to match the requirement.
+
+<Tip>
+  The model index contains detailed information of the
+  models. [Learn more][4].
+</Tip>
+
+[1]: /api-reference/identity-verifications
+[2]: /api-reference/authenticity-verifications
+[3]: /api-reference/message-verifications
+[4]: /models
+[5]: /models/verification

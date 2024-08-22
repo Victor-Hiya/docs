@@ -1,0 +1,28 @@
+---
+title: Audios
+sidebarTitle: Overview
+openapi-schema: Audio
+---
+
+Audios are binary files containing speech fragments and their associated
+relevant metadata. The person speaking on them can optionally be identified
+by linking them to an [identity][2].
+
+[Voiceprints][3] can be extracted out of them and different kinds of
+[verifications][4] can be performed on them.
+
+<Note>
+  **Access:** To manage an audio, you must have access to its [space][1].
+</Note>
+
+<Note>
+  **Isolation:** an audio can only interact
+  with resources inside its [space][1].
+</Note>
+
+## Fields
+
+[1]: /api-reference/spaces
+[2]: /api-reference/identities
+[3]: /api-reference/voiceprints
+[4]: /api-reference/verifications

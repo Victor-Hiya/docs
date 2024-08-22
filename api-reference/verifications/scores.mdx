@@ -1,0 +1,50 @@
+---
+title: Verification scores
+sidebarTitle: Scores
+---
+
+Verification scores represent the confidence of a [verification
+model][5] in a positive result, expressed as a probability. The
+meaning of a score depends on the type of verification.
+
+- **[Identity][2]:** the confidence in an identity match
+  between audio and voiceprint.
+- **[Authenticity][3]:** the confidence in the authenticity
+  and liveliness of the speaker.
+- **[Message][4]:** the confidence in the audio message
+  matching the expected one.
+
+## Subscores
+
+[Authenticity verifications][3] offer a disaggregated view of the
+different elements analyzed in the form of subscores. They are
+also expressed as probabilities, with each representing the confidence
+of the model in a positive result of a different aspect of the verification.
+
+- **Synthetic:** the confidence in the non-sythentic nature of
+  the speaker.
+- **Replay:** the confidence in the audio not being pre-recorded and
+  replayed.
+
+## Score interpretation
+
+Verification scores represent the probability of a positive result
+according to a given model. Therefore, they are decimal numbers
+ranging from 0 to 1 and can be intuitively interpreted.
+
+<img noZoom className="block dark:hidden" src="/assets/score-interpretation/light.png" />
+<img noZoom className="hidden dark:block" src="/assets/score-interpretation/dark.png" />
+
+For example, a score of 0.75 means that, according to the model,
+there are 3 in 4 chances of a positive result for the audio
+verified.
+
+## Thresholds
+
+Thresholds are used to make decisions based on verification scores. [Learn more][1].
+
+[1]: /api-reference/verifications/thresholds
+[2]: /api-reference/identity-verifications
+[3]: /api-reference/authenticity-verifications
+[4]: /api-reference/message-verifications
+[5]: /models/verification

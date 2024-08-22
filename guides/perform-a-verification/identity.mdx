@@ -1,0 +1,237 @@
+---
+title: Perform an identity verification
+sidebarTitle: Identity
+icon: id-card
+---
+
+In this guide you will learn how to perform an [identity
+verification][7] on an [audio][3], against one of the
+[voiceprints][5] of an [identity][4].
+
+<Tip>
+  If you are unfamiliar with these concepts, follow their
+  links or read the [API reference introduction][1].
+</Tip>
+
+**✦ Goal:** perform an identity `verification` and obtain its
+`score`.
+
+## Prerequisites
+
+<Steps>
+  <Snippet file="prerequisites/set-up-your-http-client.mdx" />
+  <Snippet file="prerequisites/authenticate-using-your-credentials-or-api-keys.mdx" />
+  <Snippet file="prerequisites/gain-access-to-a-space.mdx" />
+  <Snippet file="prerequisites/create-an-identity.mdx" />
+  <Snippet file="prerequisites/compute-a-voiceprint.mdx" />
+  <Snippet file="prerequisites/upload-an-audio.mdx" />
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Procedure
+
+<Steps>
+  <Step title="Perform the identity verification">
+    Perform the identity verification on the uploaded audio
+    with the chosen model, providing the target identity and
+    its selected voiceprint. See the [API reference][8].
+
+    \<--- `owner` `space` `audio` `identity` `voiceprint`
+
+    <Note>
+      Optionally, you may choose the [alias][2]
+      for the `verification`.
+    </Note>
+
+    <Note>
+      In identity verifications, an appropriate model
+      for the voiceprint is automatically selected.
+    </Note>
+
+    <Note>
+      In verifications, the latest model version
+      is automatically selected.
+    </Note>
+
+    ---> ✦ `verification` `model` `version` ✦ `score`
+
+    <Note>
+      In verifications, confidence in a positive result
+      is represented by their scores. [Learn more][6].
+    </Note>
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `POST`
+        - Path — `/spaces/{owner}/{space}/verifications/identity`
+        - Body — `application/json`
+
+        ```json
+        {
+          "audio": "{audio}",
+          "identity": "{identity}",
+          "voiceprint": "{voiceprint}"
+        }
+        ```
+      </Tab>
+      <Tab title="Response">
+        - Code — `201`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{verification}",
+          "alias": "...",
+          "model": {
+            "handle": "{model}",
+            "version": "{version}"
+          },
+          "audio": {
+            "handle": "{audio}",
+            "alias": "..."
+          },
+          "voiceprint": {
+            "handle": "{voiceprint}",
+            "alias": "...",
+            "identity": {
+              "handle": "{identity}",
+              "alias": "..."
+            }
+          },
+          "score": {score},
+          "performedAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Validation
+
+<Steps>
+  <Step title="Validate the identity verification details">
+    To validate that the identity verification has been
+    correctly performed, retrieve and analyze its details.
+    See the [API reference][9].
+
+    \<--- `owner` `space` `verification`
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/spaces/{owner}/{space}/verifications/identity/{verification}`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{verification}",
+          "alias": "...",
+          "model": {
+            "handle": "{model}",
+            "version": "{version}"
+          },
+          "audio": {
+            "handle": "{audio}",
+            "alias": "..."
+          },
+          "voiceprint": {
+            "handle": "{voiceprint}",
+            "alias": "...",
+            "identity": {
+              "handle": "{identity}",
+              "alias": "..."
+            }
+          },
+          "score": ...,
+          "performedAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Validate the verification usage records">
+    To validate that the identity verification has been
+    correctly performed, retrieve and analyze the verification
+    usage records. See the [API reference][11].
+
+    \<--- `owner`
+
+    <Warning>
+      This step assumes that the `owner` is an organization.
+      If you are the owner, you must use a slightly different
+      endpoint. See the [API reference][10].
+    </Warning>
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/orgs/{owner}/records/verification`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        [
+          ...,
+          {
+            "id": "...",
+            "handle": "...",
+            "actor": {
+              "handle": "...",
+              "alias": "..."
+            },
+            "type": "identity",
+            "model": {
+              "handle": "{model}",
+              "version": "{version}"
+            },
+            "verification": {
+              "handle": "{verification}",
+              "alias": "...",
+              "type": "identity"
+            },
+            "space": {
+              "handle": "{space}",
+              "alias": "...",
+              "owner": {
+                "type": "...",
+                "handle": "{owner}",
+                "alias": "..."
+              }
+            },
+            "owner": {
+              "type": "...",
+              "handle": "{owner}",
+              "alias": "..."
+            },
+            "performedAt": "..."
+          },
+          ...
+        ]
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="party-horn"></Step>
+</Steps>
+
+[1]: /api-reference/introduction
+[2]: /api-reference/ids-handles-and-aliases
+[3]: /api-reference/audios
+[4]: /api-reference/identities
+[5]: /api-reference/voiceprints
+[6]: /api-reference/verifications/scores
+[7]: /api-reference/identity-verifications
+[8]: /api-reference/identity-verifications/create
+[9]: /api-reference/identity-verifications/get
+[10]: /api-reference/verification-usage-records/list-your-user
+[11]: /api-reference/verification-usage-records/list-organizations
+[12]: /models/identity-verification

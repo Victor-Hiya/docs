@@ -1,0 +1,66 @@
+---
+title: Custom field formats
+---
+
+The string fields defined in our [OpenAPI definition][1] make use of the
+following formats.
+
+<AccordionGroup>
+  <Accordion title="uuid">
+    Universally Unique Identifier as defined in [RFC 4122][2].
+
+    **Example:** `986b0cc0-e559-47a1-8226-bedf5002371f`
+  </Accordion>
+  <Accordion title="handle">
+    Hyphen-separated lowercase alphanumeric characters.
+
+    **Example:** `th1s-1s-a-handle`
+  </Accordion>
+  <Accordion title="alias">
+    UTF-8 strings which currently do not have any additional restrictions.
+
+    **Example:** `Thís 1s an alïas! かっこいい!`
+  </Accordion>
+  <Accordion title="email">
+    Email address as defined in the [HTML5 specification][3].
+
+    **Example:** `this.is.an@email.com`
+  </Accordion>
+  <Accordion title="password">
+    Alphanumeric characters, whitespace and the special characters bellow.
+
+    ```
+    ?!,.:;=+-*~<>#$%&@()[]{}/\|_"'`^
+    ```
+
+    **Example:** `th1s 1s a _Pa$$w0rd_!`
+  </Accordion>
+  <Accordion title="date-time">
+    Timestamp as defined in [RFC 3339][4].
+
+    **Example:** `2023-01-01T00:00:00.000Z`
+  </Accordion>
+  <Accordion title="duration">
+    Duration as defined in [RFC 3339][4].
+
+    **Example:** `PT1M7.25S`
+  </Accordion>
+  <Accordion title="byte">
+    Base64-encoded binary data as defined in [RFC 4648][5].
+
+    **Example:** `VGhpcyBpcyBub3QgYSByZWFsIGZpbGU=`
+  </Accordion>
+  <Accordion title="jwt">
+    Base64-encoded Json Web Token as defined in [RFC 7519][6].
+
+    **Example:** `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLWEifQ.Enz9YR7aZ9fulmBm9qVP7hA`
+  </Accordion>
+</AccordionGroup>
+
+[1]: /api-reference/openapi-definition
+[2]: https://datatracker.ietf.org/doc/html/rfc4122
+[3]: https://html.spec.whatwg.org/dev/
+[4]: https://datatracker.ietf.org/doc/html/rfc3339
+[5]: https://datatracker.ietf.org/doc/html/rfc4648
+[6]: https://datatracker.ietf.org/doc/html/rfc7519
+

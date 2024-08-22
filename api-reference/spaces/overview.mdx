@@ -1,0 +1,46 @@
+---
+title: Spaces
+sidebarTitle: Overview
+openapi-schema: Space
+---
+
+Spaces act as containers and keep speech data and results
+bundled and isolated. They belong to either a [user][3]
+or an [organization][4].
+
+<Tip>
+  To learn how to view the [usage statistics][5] of a space,
+  check the usage section.
+</Tip>
+
+<Note>
+  **Access:** To manage a space, it must either belong to [your user][2]
+  or to one of your [organizations][4].
+</Note>
+
+<Note>
+  **Composite handle:** Spaces are tightly related to their owner and
+  their handle is only unique in combination with them.
+  [Learn more][1].
+</Note>
+
+## Content
+
+[Users][3] can upload and import speech data into a space.
+The platform generates results by extracting and analyzing
+characteristics of that data.
+
+<CardGroup cols={2}>
+  <Snippet file="cards/audios.mdx" />
+  <Snippet file="cards/identities.mdx" />
+  <Snippet file="cards/voiceprints.mdx" />
+  <Snippet file="cards/verifications.mdx" />
+</CardGroup>
+
+## Fields
+
+[1]: /api-reference/ids-handles-and-aliases#composite-handles
+[2]: /api-reference/your-user
+[3]: /api-reference/users
+[4]: /api-reference/organizations
+[5]: /api-reference/usage-statistics

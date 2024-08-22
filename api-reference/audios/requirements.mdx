@@ -1,0 +1,39 @@
+---
+title: Media file requirements for upload
+sidebarTitle: Requirements
+---
+
+To upload a media file as an [audio][1] it must meet
+the following requirements.
+
+## Duration
+
+The duration of the media file must not exceed 5 minutes.
+
+## Voice activity
+
+The platform must detect at least 1 second of speech.
+
+## Format and codec
+
+The format and codec of the media file must be
+decodable by [FFmpeg][2].
+
+You may click on the cards bellow to go to the
+appropriate sections of their website, where
+the supported formats and codecs are listed.
+
+<CardGroup cols={3}>
+  <Card title="File formats" icon="file-pen" href="https://ffmpeg.org/general.html#File-Formats">
+    Check the supported file formats.
+  </Card>
+  <Card title="Audio codecs" icon="file-audio" href="https://ffmpeg.org/general.html#Audio-Codecs">
+    Check the supported audio codecs.
+  </Card>
+  <Card title="Video codecs" icon="file-video" href="https://ffmpeg.org/general.html#Video-Codecs">
+    Check the supported video codecs.
+  </Card>
+</CardGroup>
+
+[1]: /api-reference/audio
+[2]: https://ffmpeg.org

@@ -1,0 +1,47 @@
+---
+title: Authenticity verifications
+sidebarTitle: Overview
+openapi-schema: AuthenticityVerification
+---
+
+Authenticity verifications analyze the authenticity and
+liveliness of an [audio][2] to validate that the voice
+belongs to a human speaking live.
+
+They can be used to detect a variety of spoofing or spam
+attempts, including the use of synthetic voices and the
+playback of voice recordings.
+
+<Tip>
+  Combining authenticity verifications with [message
+  verifications][4] can improve robustness against spoofing attempts.
+</Tip>
+
+<Note>
+  **Access:** To manage a verification,
+  you must have access to its [space][1].
+</Note>
+
+<Note>
+  **Isolation:** A verification can only interact with
+  resources inside its [space][1].
+</Note>
+
+<Note>
+  **Model:** The analysis of the authenticity and liveliness
+  of the voice is powered by a specific version
+  of an [authenticity verification model][5].
+</Note>
+
+<Note>
+  **Score:** Confidence in a positive result
+  is represented by the [score][3].
+</Note>
+
+## Fields
+
+[1]: /api-reference/spaces
+[2]: /api-reference/audios
+[3]: /api-reference/verifications/scores
+[4]: /api-reference/message-verifications
+[5]: /models/authenticity-verification

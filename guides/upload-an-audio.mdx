@@ -1,0 +1,173 @@
+---
+title: Upload an audio
+icon: comment
+---
+
+In this guide you will learn how to upload a media file
+as an [audio][4] to a [space][3]. This is a prerequisite
+to compute [voiceprints][9] or perform [verifications][10].
+
+<Tip>
+  If you are unfamiliar with these concepts, follow their
+  links or read the [API reference introduction][1].
+</Tip>
+
+**✦ Goal:** upload an `audio` and store its reference
+for future use.
+
+## Prerequisites
+
+<Steps>
+  <Snippet file="prerequisites/set-up-your-http-client.mdx" />
+  <Snippet file="prerequisites/authenticate-using-your-credentials-or-api-keys.mdx" />
+  <Snippet file="prerequisites/gain-access-to-a-space.mdx" />
+  <Snippet file="prerequisites/obtain-a-valid-media-file.mdx" />
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Procedure
+
+<Steps>
+  <Step title="Encode the media file">
+    You cannot directly upload the binary media file through
+    the HTTP API. Instead, you must first encode it as a
+    Base64 string. See the [API reference][5].
+
+    \<--- `file.mp3`
+
+    ---> `file.b64`
+
+    <Tabs>
+      <Tab title="Terminal">
+        The encoder showcased is the `base64` CLI tool
+        available in most Linux distributions.
+
+        <Tip>
+          More encoding examples are provided in the
+          [API reference][5].
+        </Tip>
+
+        ```bash
+        base64 -w 0 {file.mp3} >> {file.b64}
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Upload the audio">
+    Upload the Base64-encoded media file as an audio.
+    See the [API reference][6].
+
+    \<--- `owner` `space` `file.b64`
+
+    <Note>
+      Optionally, you may choose the [alias][2]
+      for the `audio`.
+    </Note>
+
+    ---> ✦ `audio`
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `POST`
+        - Path — `/spaces/{owner}/{space}/audios`
+        - Body — `application/json`
+
+        ```json
+        {
+          "file": "{file.b64}"
+        }
+        ```
+      </Tab>
+      <Tab title="Response">
+        - Code — `201`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{audio}",
+          "alias": "...",
+          "duration": "...",
+          "voiceDuration": "...",
+          "frequency": ...,
+          "identity": null,
+          "state": "available",
+          "uploadedAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="arrow-down"></Step>
+</Steps>
+
+## Validation
+
+<Steps>
+  <Step title="Validate the audio details">
+    To validate that the audio has been correctly uploaded,
+    retrieve and analyze its details. See the [API reference][7].
+
+    \<--- `owner` `space` `audio`
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/spaces/{owner}/{space}/audios/{audio}`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `application/json`
+
+        ```json
+        {
+          "id": "...",
+          "handle": "{audio}",
+          "alias": "...",
+          "duration": "...",
+          "voiceDuration": "...",
+          "frequency": ...,
+          "identity": null,
+          "state": "available",
+          "uploadedAt": "..."
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Validate the binary file">
+    To validate that the audio has been correctly uploaded,
+    retrieve and listen to its binary file. See the [API reference][8].
+
+    \<--- `owner` `space` `audio`
+
+    ---> `file.wav`
+
+    <Tabs>
+      <Tab title="Request">
+        - Method — `GET`
+        - Path — `/spaces/{owner}/{space}/audios/{audio}/file`
+      </Tab>
+      <Tab title="Response">
+        - Code — `200`
+        - Body — `audio/wav`
+
+        ```text
+        {file.wav}
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step icon="party-horn"></Step>
+</Steps>
+
+[1]: /api-reference/introduction
+[2]: /api-reference/ids-handles-and-aliases
+[3]: /api-reference/spaces
+[4]: /api-reference/audios
+[5]: /api-reference/audios/base64-encoding
+[6]: /api-reference/audios/create
+[7]: /api-reference/audios/get
+[8]: /api-reference/audios/get-audio-file
+[9]: /api-reference/voiceprints
+[10]: /api-reference/verifications

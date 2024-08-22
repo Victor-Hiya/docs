@@ -1,33 +1,83 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: Introduction
 ---
 
+Welcome to the API reference of the Loccus Platform. Here you
+will find detailed descriptions of the endpoints, resources
+and operations available in our API.
+
+<Tip>
+  Check the [guides][4] for step by step flows to guide
+  you through the most relevant operations.
+</Tip>
+
+<Tip>
+  Check the [model index][5] for detailed descriptions of the
+  models available on the platform.
+</Tip>
+
+<Note>**Base URL for API requests** -- `https://api.loccus.ai/v1`</Note>
+
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  **Starting point:** bellow we provide an eagle-eye view of the
+  different sections and it is a good place to start, but you can
+  also use the sidebar to navigate to pages relevant to you.
 </Note>
-
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+Request must be authenticated using [bearer tokens][1], which
+can be obtained from different sources and can be short-lived
+or long-lived.
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+<CardGroup cols={1}>
+  <Snippet file="cards/bearer-tokens.mdx" />
+</CardGroup>
+<CardGroup cols={2}>
+  <Snippet file="cards/credentials.mdx" />
+  <Snippet file="cards/api-keys.mdx" />
+</CardGroup>
+
+## Structure and access
+
+Access to the resources on the platform is based on ownership,
+which in turn is determined by the relationships between
+the following resources.
+
+<CardGroup cols={2}>
+  <Snippet file="cards/users.mdx" />
+  <Snippet file="cards/organizations.mdx" />
+</CardGroup>
+<CardGroup cols={1}>
+  <Snippet file="cards/spaces.mdx" />
+</CardGroup>
+
+## Speech data and results
+
+[Users][2] can upload and import speech data into a [space][3].
+The platform generates results by extracting and analyzing
+characteristics of that data.
+
+<CardGroup cols={2}>
+  <Snippet file="cards/audios.mdx" />
+  <Snippet file="cards/identities.mdx" />
+  <Snippet file="cards/voiceprints.mdx" />
+  <Snippet file="cards/verifications.mdx" />
+</CardGroup>
+
+## Usage
+
+Usage of the platform can be reviewed either by analyzing the
+relationships and state of the currently existing resources
+or through persistent records of the operations conducted.
+
+<CardGroup cols={2}>
+  <Snippet file="cards/usage-statistics.mdx" />
+  <Snippet file="cards/usage-records.mdx" />
+</CardGroup>
+
+[1]: /api-reference/bearer-tokens
+[2]: /api-reference/users
+[3]: /api-reference/spaces
+[4]: /guides/introduction
+[5]: /models/introduction

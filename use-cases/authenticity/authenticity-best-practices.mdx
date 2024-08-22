@@ -1,0 +1,27 @@
+---
+title: Authenticity Best Practices
+icon: badge-check
+---
+
+In this page we list the best practices when using Loccus AI Platform for
+verifying the voice authenticity.
+
+## Model Selection
+In order to provide the best result accuracy, is recommended that you 
+select the model that better fits your data. Please check the available
+[Authenticity verification models][1].
+
+## Audio duration
+The minimum voice duration for optimal verification performance is **4s**.
+With less than that we can provide results, but with less accuracy.
+Going beyond **10s** there are diminishing returns.
+
+## Audio retention period
+We only store the audios for the configured amount for your space (by default 90 days).
+During this period you will be able to access the audios using Loccus API and Console.
+If you want to change this retention period, please check the [space configuration endpoint][2].
+
+
+
+[1]: /models/authenticity-verification/overview
+[2]: /api-reference/spaces/update_config

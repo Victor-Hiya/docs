@@ -1,0 +1,12 @@
+---
+title: Compute a voiceprint
+sidebarTitle: Compute
+description: Compute a computable voiceprint.
+openapi: post /spaces/{owner}/{space}/voiceprints/{identity}/{voiceprint}:compute
+---
+
+<Warning>
+  **Irreversible:** A voiceprint can only be computed once and
+  the operation is irreversible. Audios cannot be added or
+  removed afterwards.
+</Warning>
